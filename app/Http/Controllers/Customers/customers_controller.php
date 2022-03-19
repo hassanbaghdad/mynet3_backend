@@ -24,7 +24,7 @@ class customers_controller extends Controller
     public function get_customers_speed()
     {
      
-        $customers = DB::select("SELECT * FROM costumer LEFT JOIN sand ON costumer.cost_id = sand.Sand_cosFk LEFT JOIN brig ON costumer.cost_bregFk=brig.brig_id WHERE cost_isdel=0");
+        $customers = DB::select("SELECT * FROM costumer LEFT JOIN Sand ON costumer.cost_id = Sand.Sand_cosFk LEFT JOIN brig ON costumer.cost_bregFk=brig.brig_id WHERE cost_isdel=0");
         return response()->json($customers,200);
        
     }
@@ -33,7 +33,7 @@ class customers_controller extends Controller
     public function get_customer_details(Request $request)
     {
         //$details = DB::select("SELECT cost_name,cost_user,card_name,Sand_dateto,card_id ,DATEDIFF(sand.Sand_dateto,NOW()) AS `remaining_days`,SUM(sand.Sand_money)-SUM(sand.Sand_moneyin) AS `remaining_money` FROM costumer, brig,sand,card where costumer.cost_bregFk=brig.brig_id AND costumer.cost_id = sand.Sand_cosfk AND costumer.cost_cardFk=card.card_id and cost_isdel=0 and costumer.cost_id=$request->cost_id GROUP BY costumer.cost_name order by costumer.cost_id desc LIMIT 1");
-        $details = DB::select("SELECT cost_name,cost_user,MAX(Sand_dateto) AS 'Sand_dateto' ,Sand_cardtype ,DATEDIFF(MAX(sand.Sand_dateto),NOW()) AS `remaining_days`,(SELECT SUM(Sand_money)-SUM(Sand_moneyin) FROM sand WHERE Sand_cosfk=costumer.cost_id) AS 'remaining_money' FROM costumer JOIN sand ON costumer.cost_id = sand.Sand_cosfk WHERE cost_isdel=0 and sand.Sand_isdel=0 and costumer.cost_id=$request->cost_id ORDER BY sand.Sand_id DESC LIMIT 1");
+        $details = DB::select("SELECT cost_name,cost_user,MAX(Sand_dateto) AS 'Sand_dateto' ,Sand_cardtype ,DATEDIFF(MAX(Sand.Sand_dateto),NOW()) AS `remaining_days`,(SELECT SUM(Sand_money)-SUM(Sand_moneyin) FROM Sand WHERE Sand_cosfk=costumer.cost_id) AS 'remaining_money' FROM costumer JOIN Sand ON costumer.cost_id = Sand.Sand_cosfk WHERE cost_isdel=0 and Sand.Sand_isdel=0 and costumer.cost_id=$request->cost_id ORDER BY Sand.Sand_id DESC LIMIT 1");
         
         if(count($details) < 1)
         {
@@ -132,7 +132,7 @@ class customers_controller extends Controller
 
     public function get_customer_debts(Request $request)
     {
-        $info = DB::select("SELECT cost_name ,cost_user, (SELECT SUM(Sand_money)-SUM(Sand_moneyin) FROM sand WHERE Sand_cosfk=costumer.cost_id ) AS 'debts' FROM costumer left join sand ON costumer.cost_id = sand.Sand_cosFk WHERE costumer.cost_id=$request->cost_id AND costumer.cost_isdel=0 and sand.Sand_isdel=0 GROUP BY cost_name");
+        $info = DB::select("SELECT cost_name ,cost_user, (SELECT SUM(Sand_money)-SUM(Sand_moneyin) FROM Sand WHERE Sand_cosfk=costumer.cost_id ) AS 'debts' FROM costumer left join Sand ON costumer.cost_id = Sand.Sand_cosFk WHERE costumer.cost_id=$request->cost_id AND costumer.cost_isdel=0 and Sand.Sand_isdel=0 GROUP BY cost_name");
         return response()->json($info,200);
     }
 
@@ -167,7 +167,7 @@ class customers_controller extends Controller
 
     public function get_sands_customer(Request $request)
     {
-        $sands = DB::select("SELECT Sand_id,Sand_date,Sand_dateto,Sand_moneyType,Sand_money,Sand_moneyin,Sand_cardtype,sand_user,cost_name,cost_user FROM sand JOIN costumer ON sand.sand_cosFk = costumer.cost_id WHERE costumer.cost_isdel=0 AND sand.Sand_isdel=0 AND costumer.cost_id=$request->cost_id");
+        $sands = DB::select("SELECT Sand_id,Sand_date,Sand_dateto,Sand_moneyType,Sand_money,Sand_moneyin,Sand_cardtype,sand_user,cost_name,cost_user FROM Sand JOIN costumer ON Sand.sand_cosFk = costumer.cost_id WHERE costumer.cost_isdel=0 AND Sand.Sand_isdel=0 AND costumer.cost_id=$request->cost_id");
         
         return response()->json($sands,200);
     }

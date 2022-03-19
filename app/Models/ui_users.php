@@ -10,4 +10,10 @@ class ui_users extends Model
     use HasFactory;
     protected $table = "ui_users";
     protected $primaryKey = "id";
+
+    protected $casts = [
+        'col_Fullname'=>'boolean',
+        'col_username'=>'boolean',
+        'col_user_level'=>'boolean'
+    ];
 }

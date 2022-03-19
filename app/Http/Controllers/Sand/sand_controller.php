@@ -13,7 +13,7 @@ class sand_controller extends Controller
 {
     public function get_bills()
     {
-        $bills = DB::select("SELECT * FROM sand INNER JOIN costumer on sand.Sand_cosFk = costumer.cost_id where (Sand_moneyin + Sand_money)<>0 and sand.Sand_isdel !=1 and costumer.cost_isdel=0 order by sand.Sand_date DESC");
+        $bills = DB::select("SELECT * FROM Sand INNER JOIN costumer on Sand.Sand_cosFk = costumer.cost_id where (Sand_moneyin + Sand_money)<>0 and Sand.Sand_isdel !=1 and costumer.cost_isdel=0 order by Sand.Sand_date DESC");
          
         return response()->json($bills,200);
     }

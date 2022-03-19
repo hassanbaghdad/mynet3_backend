@@ -11,4 +11,10 @@ class users_model extends Model
     protected $table = "users";
     protected $primaryKey = "user_id";
     protected $hidden = ['password'];
+
+    protected $casts =[
+        'user_level'=>'integer',
+        'user_type'=>'integer',
+        'user_store'=>'integer'
+    ];
 }

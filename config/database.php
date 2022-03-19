@@ -1,6 +1,13 @@
 <?php
 
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Multitenancy\Actions\ForgetCurrentTenantAction;
+use Spatie\Multitenancy\Actions\MakeTenantCurrentAction;
+use Spatie\Multitenancy\Concerns\UsesMultitenancyConfig;
+use Spatie\Multitenancy\Models\Concerns\UsesLandlordConnection;
+use Spatie\Multitenancy\Models\Tenant;
+use Spatie\Multitenancy\TenantCollection;
 
 return [
 
@@ -15,8 +22,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
-    
+    'default' =>  'tenant',
+
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -44,12 +51,12 @@ return [
 
         ],
 
-        'mysql' => [
+        'landlord' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
+            'database' => 'mynetah1_landlord',
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
@@ -71,6 +78,33 @@ return [
                 'timeout' => 60 * 5, // 5 minute timeout
             ],
         ],
+        'tenant' => [
+            'driver' => 'mysql',
+            'database' => null,
+            'host' => '127.0.0.1',
+            'username' => 'mynetah1_lord',
+            'password' => 'Iq135137Iq@@',
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'modes' => [
+                'STRICT_ALL_TABLES',
+            ],
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+            'dump' => [
+                'dump_binary_path' => ' ', // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+            ],
+        ],
+
+
 
         'pgsql' => [
             'driver' => 'pgsql',

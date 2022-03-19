@@ -20,7 +20,7 @@ use App\Http\Controllers\Debts\debts_controller;
 
 Route::middleware(['auth:sanctum','api'])->get('get-bills',[sand_controller::class,'get_bills']);
 
-Route::middleware(['auth:sanctum','api'])->post('delete-bill',[sand_controller::class,'delete_bill']);
+Route::middleware(['auth:sanctum','api','accountant_mid'])->post('delete-bill',[sand_controller::class,'delete_bill']);
 
 Route::middleware(['auth:sanctum','api'])->get('get-debts-to-us',[debts_controller::class,'get_debts_to_us']);
 

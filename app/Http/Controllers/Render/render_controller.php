@@ -14,6 +14,7 @@ use App\Models\ui_users;
 use App\Models\ui_debts_to_us;
 use App\Models\ui_debts_to_them;
 use App\Models\ui_credits;
+use App\Models\settings_model;
 
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,7 @@ class render_controller extends Controller
         $ui_debts_to_us = ui_debts_to_us::where('route','debts-to-us')->where('user_id',auth()->user()->user_id)->get();
         $ui_debts_to_them = ui_debts_to_them::where('route','debts-to-them')->where('user_id',auth()->user()->user_id)->get();
         $ui_credits = ui_credits::where('route','credits')->where('user_id',auth()->user()->user_id)->get();
+        $settings = settings_model::where('id',1)->get();
 
         $token = auth()->user()->createToken('API Token')->plainTextToken;
         $user = auth()->user();
@@ -40,6 +42,7 @@ class render_controller extends Controller
         return response()->json([
             'cards'=>$cards,
             'towers'=>$towers,
+            'settings'=>$settings,
             'ui_customers'=>$ui_customers,
             'ui_towers'=>$ui_towers,
             'ui_cards'=>$ui_cards,

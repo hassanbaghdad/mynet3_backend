@@ -56,6 +56,7 @@ class ui_controller extends Controller
                 'col_cost_secter'=>$this->tobool($request->col_cost_secter)
             ]);
             
+            
             return response()->json(['msg'=>'تم التعديل بنجاح'],200);
         }else{
                 $ui = new ui_customers();

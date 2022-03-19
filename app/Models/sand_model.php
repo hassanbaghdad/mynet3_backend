@@ -9,7 +9,7 @@ class sand_model extends Model
 {
     use HasFactory;
 
-    protected $table = "sand";
+    protected $table = "Sand";
 
     protected $primaryKey = "Sand_id";
 }

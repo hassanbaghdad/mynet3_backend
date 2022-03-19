@@ -16,9 +16,10 @@ use App\Http\Controllers\Towers\towers_controller;
 |
 */
 
-
-Route::middleware(['auth:sanctum','api'])->get('get-towers',[towers_controller::class,'get_towers']);
-Route::middleware(['auth:sanctum','api'])->post('add-tower',[towers_controller::class,'add_tower']);
-Route::middleware(['auth:sanctum','api'])->post('edit-tower',[towers_controller::class,'edit_tower']);
-Route::middleware(['auth:sanctum','api'])->post('delete-tower',[towers_controller::class,'delete_tower']);
+Route::middleware(['auth:sanctum', 'api','owner_mid'])->group(function () {
+    Route::get('get-towers', [towers_controller::class, 'get_towers']);
+    Route::post('add-tower', [towers_controller::class, 'add_tower']);
+    Route::post('edit-tower', [towers_controller::class, 'edit_tower']);
+    Route::post('delete-tower', [towers_controller::class, 'delete_tower']);
+});
 

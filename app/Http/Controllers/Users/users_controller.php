@@ -22,11 +22,11 @@ class users_controller extends Controller
         $user = new users_model();
 
         $user->Fullname = $request->Fullname;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
+        $user->user_name = $request->user_name;
+        $user->user_pass = Hash::make($request->user_pass);
         $user->user_level = $request->user_level;
+        $user->user_type = $request->user_type;
         $user->user_active = 1;
-        
         $user->user_isdel = 0;
         
         if($user->save())
@@ -37,7 +37,7 @@ class users_controller extends Controller
 
     public function edit_user(Request $request)
     {
-        $users = users_model::where('username',$request->username)->get();
+        $users = users_model::where('user_name',$request->user_name)->get();
         if(count($users) >0 && $users[0]->user_id != $request->user_id)
         {
             return response()->json(['msg'=>'عفوا اسم المستخدم موجود بالفعل'],403);
@@ -47,23 +47,23 @@ class users_controller extends Controller
         // {
             
             
-            if($request->password !="" && $request->password != null)
+            if($request->user_pass !="" && $request->user_pass != null)
             {
                 users_model::where('user_id',$request->user_id)->update([
                     'Fullname'=>$request->Fullname,
-                    'username'=>$request->username,
-                    'password'=>Hash::make($request->password),
+                    'user_name'=>$request->user_name,
+                    'user_pass'=>Hash::make($request->user_pass),
                     'user_level'=>$request->user_level,
-                    
+                    'user_type'=>$request->user_type,
                 ]);
                 return response()->json(['msg'=>'تم تعديل المشرف بنجاح'],200);
 
             }else{
                 users_model::where('user_id',$request->user_id)->update([
                     'Fullname'=>$request->Fullname,
-                    'username'=>$request->username,
+                    'user_name'=>$request->user_name,
                     'user_level'=>$request->user_level,
-                    
+                    'user_type'=>$request->user_type,
                 ]);
                 return response()->json(['msg'=>'تم تعديل المشرف بنجاح'],200);
             }

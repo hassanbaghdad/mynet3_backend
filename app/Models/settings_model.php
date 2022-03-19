@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class settings_model extends Model
 {
     use HasFactory;
+
+    protected $table = "settings";
+
+    protected $casts = [
+        'current_dollar'=>'float',
+        'dark'=>'boolean'
+    ];
 }

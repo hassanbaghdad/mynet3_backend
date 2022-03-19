@@ -16,9 +16,10 @@ use App\Http\Controllers\Cards\cards_controller;
 |
 */
 
-
-Route::middleware(['auth:sanctum','api'])->get('get-cards',[cards_controller::class,'get_cards']);
-Route::middleware(['auth:sanctum','api'])->post('add-card',[cards_controller::class,'add_card']);
-Route::middleware(['auth:sanctum','api'])->post('edit-card',[cards_controller::class,'edit_card']);
-Route::middleware(['auth:sanctum','api'])->post('delete-card',[cards_controller::class,'delete_card']);
+Route::middleware(['auth:sanctum', 'api','owner_mid'])->group(function () {
+    Route::get('get-cards', [cards_controller::class, 'get_cards']);
+    Route::post('add-card', [cards_controller::class, 'add_card']);
+    Route::post('edit-card', [cards_controller::class, 'edit_card']);
+    Route::post('delete-card', [cards_controller::class, 'delete_card']);
+});
 
