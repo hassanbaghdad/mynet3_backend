@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Render\render_controller;
 use Validator;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -32,6 +33,12 @@ class AuthController extends Controller
             return response()->json(['msg'=>'اسم المستخدم او كلمة المرور غير صحيحة'],401);
             //return response()->json($validator->validated(),401);
 
+        }
+        $u = User::where('user_name',$request->user_name)->first();
+        
+        if($u->user_isdel == 1 && $u->user_active == 0)
+        {
+            return response()->json(['msg'=>'عفوا لايمنك الدخول بهذا الحساب'],401);
         }
         $token = auth()->user()->createToken('API Token')->plainTextToken;
         $user = auth()->user();
@@ -59,6 +66,12 @@ class AuthController extends Controller
             
             return response()->json(['msg'=>'اسم المستخدم او كلمة المرور غير صحيحة'],401);
     
+        }
+        $u = User::where('user_name',$request->user_name)->first();
+        
+        if($u->user_isdel == 1 && $u->user_active == 0)
+        {
+            return response()->json(['msg'=>'عفوا لايمنك الدخول بهذا الحساب'],401);
         }
         $token = auth()->user()->createToken('API Token')->plainTextToken;
         $user = auth()->user();

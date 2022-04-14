@@ -114,6 +114,8 @@ class customers_controller extends Controller
         $sand->Sand_cardtype = $request->card_name;
         $sand->Sand_cosfk = $request->sand_costFk;
         $sand->Sand_isdel = 0;
+        $sand->Sand_withdrawal_iq = 0;
+        $sand->Sand_moneyCarry = 0;
         $sand->sand_user = auth()->user()->Fullname;
         $sand->Sand_month = $request->months;
         $sand->Sand_fkBrig = $request->sand_FkBrig;
@@ -143,8 +145,11 @@ class customers_controller extends Controller
         $sand->Sand_money = $request->sand_money;
         $sand->Sand_moneyin = $request->sand_moneyin;
         $sand->Sand_moneyType = 6;
+        $sand->Sand_moneyCarry = 0;
+        $sand->Sand_withdrawal_iq = 0;
         $sand->Sand_date= $request->sand_date;
         $sand->Sand_nextdate= $request->sand_nextdate;
+        $sand->sand_user = auth()->user()->Fullname;
         if($sand->save())
         {
             return response()->json(['msg'=>'تم حفظ وصل الدين بنجاح'],200);
@@ -158,7 +163,10 @@ class customers_controller extends Controller
         $sand->Sand_money = $request->sand_money;
         $sand->Sand_moneyin = $request->sand_moneyin;
         $sand->Sand_moneyType = 2;
+        $sand->Sand_withdrawal_iq = 0;
+        $sand->Sand_moneyCarry = 0;
         $sand->Sand_date= $request->sand_date;
+        $sand->sand_user = auth()->user()->Fullname;
         if($sand->save())
         {
             return response()->json(['msg'=>'تم حفظ وصل التسديد بنجاح'],200);

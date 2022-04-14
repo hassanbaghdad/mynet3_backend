@@ -10,13 +10,13 @@ class debts_controller extends Controller
 {
     public function get_debts_to_us()
     {
-        $debts_to_us= DB::select("SELECT brig_name, cost_id,cost_phone,cost_name,cost_user,max(Sand_nextdate) as Sand_nextdate, Sand_dateto ,(sum( Sand_money )-sum( Sand_moneyin))as 'Sand_carry' FROM Sand ,brig,costumer where cost_isdel = 0 and Sand_isdel=0 and Sand_cosFk=cost_id and brig_id=cost_bregFk group by cost_id,cost_name,cost_user,brig_name,cost_phone having (sum( Sand_money )-sum( Sand_moneyin)) >0");
+        $debts_to_us= DB::select("SELECT brig_name, cost_id,cost_phone,cost_name,cost_user,max(Sand_nextdate) as Sand_nextdate, max(Sand_dateto) as Sand_dateto ,(sum( Sand_money )-sum( Sand_moneyin))as 'Sand_carry' FROM Sand ,brig,costumer where cost_isdel = 0 and Sand_isdel=0 and Sand_cosFk=cost_id and brig_id=cost_bregFk group by cost_id,cost_name,cost_user,brig_name,cost_phone having (sum( Sand_money )-sum( Sand_moneyin)) >0");
         return response()->json($debts_to_us,200);
     }
 
     public function get_debts_to_them()
     {
-        $debts_to_them= DB::select("SELECT brig_name, cost_id,cost_phone,cost_name,cost_user,max(Sand_nextdate) as Sand_nextdate, Sand_dateto ,(sum( Sand_money )-sum( Sand_moneyin))as 'Sand_carry' FROM Sand ,brig,costumer where cost_isdel = 0 and Sand_isdel=0 and Sand_cosFk=cost_id and brig_id=cost_bregFk group by cost_id,cost_name,cost_user,brig_name,cost_phone having (sum( Sand_money )-sum( Sand_moneyin)) < 0");
+        $debts_to_them= DB::select("SELECT brig_name, cost_id,cost_phone,cost_name,cost_user,max(Sand_nextdate) as Sand_nextdate, max(Sand_dateto) as Sand_dateto ,(sum( Sand_money )-sum( Sand_moneyin))as 'Sand_carry' FROM Sand ,brig,costumer where cost_isdel = 0 and Sand_isdel=0 and Sand_cosFk=cost_id and brig_id=cost_bregFk group by cost_id,cost_name,cost_user,brig_name,cost_phone having (sum( Sand_money )-sum( Sand_moneyin)) < 0");
         return response()->json($debts_to_them,200);
     }
 

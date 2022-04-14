@@ -19,6 +19,8 @@ class settings_controller extends Controller
     {
         settings_model::where('id',1)->update([
             'site_name'=>$request->site_name,
+            'address'=>$request->address,
+            'phone'=>$request->phone,
             'current_dollar'=>$request->current_dollar,
             'dark'=>$request->dark,
         ]);
